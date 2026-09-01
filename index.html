@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Resources and Development — responsive HTML edition based on the supplied PDF.">
+<title>Resources and Development | HTML Edition</title>
+<style>
+:root{--bg:#f3f4f6;--panel:#fff;--ink:#202124;--muted:#6b7280;--line:#e5e7eb;--accent:#e85d2a;--shadow:0 12px 35px rgba(0,0,0,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.toolbar{max-width:1200px;margin:auto;min-height:64px;padding:10px 16px;display:flex;align-items:center;gap:12px;justify-content:space-between}.brand{font-weight:800;letter-spacing:.2px}.brand small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:2px}
+.controls{display:flex;align-items:center;gap:8px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:9px 12px;cursor:pointer;font:inherit}.btn:hover{background:#f8fafc}.page-select{border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:#fff}
+main{max-width:1200px;margin:0 auto;padding:28px 16px 56px}.intro{margin:0 auto 22px;max-width:850px;text-align:center}.intro h1{margin:0 0 8px;font-size:clamp(24px,4vw,38px)}.intro p{margin:0;color:var(--muted);line-height:1.6}
+.book{display:flex;flex-direction:column;gap:28px;align-items:center}.page{width:min(100%,920px);background:var(--panel);box-shadow:var(--shadow);border-radius:4px;overflow:hidden;scroll-margin-top:90px}.page img{display:block;width:100%;height:auto}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:20px 16px 40px}.top{position:fixed;right:18px;bottom:18px;z-index:10;border:0;border-radius:999px;background:#202124;color:#fff;padding:11px 14px;cursor:pointer;box-shadow:var(--shadow)}
+@media(max-width:640px){.toolbar{align-items:flex-start}.brand small{display:none}.controls .btn:first-child,.controls .btn:last-child{display:none}.controls{width:auto}.page-select{max-width:115px}.intro{text-align:left}.book{gap:14px}.page{border-radius:0;box-shadow:0 4px 16px rgba(0,0,0,.08)}}
+@media print{header,.top,.intro,footer{display:none}body{background:#fff}.main{padding:0}.page{box-shadow:none;width:100%;page-break-after:always}}
+</style>
+</head>
+<body>
+<header>
+  <div class="toolbar">
+    <div class="brand">Resources and Development<small>Responsive HTML edition • 12 pages</small></div>
+    <div class="controls" aria-label="Page controls">
+      <button class="btn" id="prev" type="button">← Prev</button>
+      <select class="page-select" id="pageSelect" aria-label="Jump to page"></select>
+      <button class="btn" id="next" type="button">Next →</button>
+    </div>
+  </div>
+</header>
+<main id="top">
+  <section class="intro">
+    <h1>Resources and Development</h1>
+    <p>A responsive web presentation of the supplied 12-page source document. The page artwork is preserved to retain the original typography, diagrams, maps and exercises.</p>
+  </section>
+  <section class="book" aria-label="Document pages">
+    <article class="page" id="page-1"><img src="pages/page-1.jpg" alt="Resources and Development — page 1 of 12" loading="lazy"></article>
+    <article class="page" id="page-2"><img src="pages/page-2.jpg" alt="Resources and Development — page 2 of 12" loading="2lazy"></article>
+    <article class="page" id="page-3"><img src="pages/page-3.jpg" alt="Resources and Development — page 3 of 12" loading="3lazy"></article>
+    <article class="page" id="page-4"><img src="pages/page-4.jpg" alt="Resources and Development — page 4 of 12" loading="4lazy"></article>
+    <article class="page" id="page-5"><img src="pages/page-5.jpg" alt="Resources and Development — page 5 of 12" loading="5lazy"></article>
+    <article class="page" id="page-6"><img src="pages/page-6.jpg" alt="Resources and Development — page 6 of 12" loading="6lazy"></article>
+    <article class="page" id="page-7"><img src="pages/page-7.jpg" alt="Resources and Development — page 7 of 12" loading="7lazy"></article>
+    <article class="page" id="page-8"><img src="pages/page-8.jpg" alt="Resources and Development — page 8 of 12" loading="8lazy"></article>
+    <article class="page" id="page-9"><img src="pages/page-9.jpg" alt="Resources and Development — page 9 of 12" loading="9lazy"></article>
+    <article class="page" id="page-10"><img src="pages/page-10.jpg" alt="Resources and Development — page 10 of 12" loading="0lazy"></article>
+    <article class="page" id="page-11"><img src="pages/page-11.jpg" alt="Resources and Development — page 11 of 12" loading="1lazy"></article>
+    <article class="page" id="page-12"><img src="pages/page-12.jpg" alt="Resources and Development — page 12 of 12" loading="2lazy"></article>
+  </section>
+</main>
+<footer>Based on the supplied G10GEO01.pdf source document.</footer>
+<button class="top" id="topBtn" type="button" aria-label="Back to top">↑</button>
+<script>
+const pages=[...document.querySelectorAll('.page')], select=document.getElementById('pageSelect');
+pages.forEach((p,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent=`Page ${i+1}`;select.appendChild(o)});
+let current=1;
+function go(n){current=Math.max(1,Math.min(pages.length,n));pages[current-1].scrollIntoView({behavior:'smooth',block:'start'});select.value=current}
+select.addEventListener('change',e=>go(+e.target.value));document.getElementById('prev').onclick=()=>go(current-1);document.getElementById('next').onclick=()=>go(current+1);document.getElementById('topBtn').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){current=pages.indexOf(e.target)+1;select.value=current}}),{rootMargin:'-35% 0px -55% 0px'});pages.forEach(p=>observer.observe(p));
+</script>
+</body>
+</html>
